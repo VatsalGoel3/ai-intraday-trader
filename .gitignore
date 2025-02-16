@@ -1,0 +1,5 @@
+__oycache__/
+*.pyc
+env/
+venv/
+*.env

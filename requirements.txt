@@ -1,0 +1,4 @@
+yfinance
+pandas
+psycopg2-binary
+pymongo
