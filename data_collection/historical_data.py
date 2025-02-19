@@ -5,7 +5,7 @@ import logging
 import sys
 import os
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.appenad(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from config.db_config import POSTGRES_CONFIG
 
 # Detailed runtime information
@@ -31,10 +31,8 @@ def preprocess_data(data: pd.DataFrame) -> pd.DataFrame:
     :param data: Raw DataFrame from yfinance.
     :return: Preprocessed DataFrame.
     """
-    # Reset the index so the date becomes a column.
     data.reset_index(inplace=True)
 
-    # Helper function: flatten column names and replace spaces with underscores.
     def flatten_col(col):
         if isinstance(col, tuple):
             return '_'.join(x.strip().replace(" ", "_") for x in col).strip().lower()
@@ -44,12 +42,9 @@ def preprocess_data(data: pd.DataFrame) -> pd.DataFrame:
     # Flatten all columns.
     data.columns = [flatten_col(col) for col in data.columns]
 
-    # If the date column was flattened to 'date_', rename it to 'date'
     if 'date_' in data.columns:
         data.rename(columns={'date_': 'date'}, inplace=True)
 
-    # Remove ticker suffix from columns.
-    # Example: if columns are like "open_eurusd=x", we want "open"
     suffix = None
     for col in data.columns:
         if col != 'date' and '_' in col:
